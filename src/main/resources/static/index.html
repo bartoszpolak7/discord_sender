@@ -1,70 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+
+<!-- lang pl and charset (prevents encoding guessings) assure display of polish charaters -->
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
     <title>Ostoja na rozwidleniu</title>
-</head>
-<body>
+  </head>
+  <body>
+    <h2>Gawędź z podróżnikami</h2>
 
-<h2>Gawędź z podróżnikami</h2>
+    <label for="message">Plotkuj w karczmie:</label>
+    <input type="text" id="message" placeholder="Opowiadaj..." />
+    <button id="send" onclick="sendMessage()">Wyślij</button>
+    <pre id="config"></pre>
 
-<label for="message">Plotkuj w karczmie:</label>
-<input type="text" id="message" placeholder="Opowiadaj...">
-<button id="send" onclick="sendMessage()">Wyślij</button>
-<pre id="config"></pre>
+    <h3>O co możesz zapytać się karczmarza:</h3>
+    <ul id="commands">
+      <li>!kategorie - jakiego rodzaju towary</li>
+      <li>!kategoria &lt;nazwa&gt; - towary danego rodzaju</li>
+    </ul>
 
-<h3>O co możesz zapytać się karczmarza:</h3>
-<ul id="commands">
-    <li>!kategorie - jakiego rodzaju towary</li>
-    <li>!kategoria &lt;nazwa&gt; - towary danego rodzaju</li>
-</ul>
+    <h2>Nowinki zasłuchane w karczmie</h2>
+    <div
+      style="display: flex; flex-direction: row; justify-content: center"
+    ></div>
+    <ul id="messages"></ul>
 
-
-<h2>Nowinki zasłuchane w karczmie</h2>
-<div style="display: flex; flex-direction: row; justify-content: center">
-
-</div>
-<ul id="messages"></ul>
-
-<script>
-
-    async function sendMessage() {
+    <script>
+      async function sendMessage() {
         let input = document.getElementById("message");
         const message = input.value;
 
         await fetch("/webhook/send", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message })
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
         });
 
         input.value = "";
-    }
+      }
 
-    document.getElementById("message").addEventListener("keydown", async function(e) {
-        if (e.key === "Enter") {
+      document
+        .getElementById("message")
+        .addEventListener("keydown", async function (e) {
+          if (e.key === "Enter") {
             await sendMessage();
-        }
-    });
+          }
+        });
 
-    async function loadMessages() {
+      async function loadMessages() {
         const response = await fetch("/bot/messages");
         const messages = await response.json();
         const list = document.getElementById("messages");
-        list.innerHTML = messages.map(m =>
-            `<li><strong>${m.author}</strong> in #${m.channel}: ${m.content}</li>`
-        ).join("");
-    }
+        list.innerHTML = messages
+          .map(
+            (m) =>
+              `<li><strong>${m.author}</strong> in #${m.channel}: ${m.content}</li>`,
+          )
+          .join("");
+      }
 
-    document.addEventListener("DOMContentLoaded", async () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/webhook/config");
         document.getElementById("config").textContent = await response.text();
         await loadMessages();
         setInterval(loadMessages, 5000);
-    });
-
-</script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>

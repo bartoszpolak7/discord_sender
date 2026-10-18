@@ -34,8 +34,8 @@ public class ApiController {
     @GetMapping(path = "/webhook/config", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getWebhookConfig() {
         return webhookService.isConfigured()
-                ? "Discord webhook is configured"
-                : "Discord webhook is not configured";
+                ? "Discord webhook jest skonfigurowany"
+                : "Discord webhook NIE jest skonfigurowany";
     }
 
     @GetMapping("/bot/messages")
