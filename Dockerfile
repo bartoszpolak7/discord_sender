@@ -9,7 +9,7 @@ COPY src/ src/
 # SpringBoot needs bootJar
 RUN gradle bootJar --no-daemon
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 RUN addgroup -S app && adduser -S app -G app
 COPY --from=build /app/build/libs/app.jar app.jar
