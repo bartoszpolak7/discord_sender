@@ -49,7 +49,7 @@ class ApiControllerTest {
 
         mockMvc.perform(get("/webhook/config"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Discord webhook is configured"));
+                .andExpect(content().string("Discord webhook jest skonfigurowany"));
     }
 
     @Test
