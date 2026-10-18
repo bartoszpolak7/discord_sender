@@ -11,7 +11,6 @@ Set these environment variables before running the application:
 | --- | --- | --- | --- |
 | `DISCORD_BOT_TOKEN` | Yes | — | Discord bot token |
 | `DISCORD_WEBHOOK_URL` | When sending a webhook | — | Discord incoming webhook URL |
-| `PYTHON_SERVICE_URL` | When using chat | `http://localhost:8000` | URL of the Python chat service |
 
 The bot requires the Discord `MESSAGE_CONTENT` and `GUILD_MESSAGES` gateway
 intents to be enabled for the application in the Discord Developer Portal.
@@ -32,5 +31,3 @@ the bundled web client.
 - `GET /webhook/config` — report whether a webhook is configured (the URL is
   kept private).
 - `GET /bot/messages` — return the bot's recent message history.
-- `POST /chat` — forward `{"message":"...","newConversation":false}` to the
-  Python chat service with the configured product and category lists.

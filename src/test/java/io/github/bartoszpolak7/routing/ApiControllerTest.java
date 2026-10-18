@@ -1,9 +1,6 @@
 package io.github.bartoszpolak7.routing;
 
-import io.github.bartoszpolak7.data.Database;
 import io.github.bartoszpolak7.model.DiscordMessage;
-import io.github.bartoszpolak7.model.PythonChatResponse;
-import io.github.bartoszpolak7.service.AIService;
 import io.github.bartoszpolak7.service.BotService;
 import io.github.bartoszpolak7.service.WebhookService;
 import org.junit.jupiter.api.Test;
@@ -32,12 +29,6 @@ class ApiControllerTest {
 
     @MockitoBean
     private BotService botService;
-
-    @MockitoBean
-    private AIService aiService;
-
-    @MockitoBean
-    private Database database;
 
     @Test
     void sendsWebhookMessage() throws Exception {
@@ -74,23 +65,4 @@ class ApiControllerTest {
                         """));
     }
 
-    @Test
-    void forwardsChatRequestAndReturnsPythonResponse() throws Exception {
-        given(database.getProducts()).willReturn(List.of());
-        given(database.getCategories()).willReturn(List.of());
-        given(aiService.chat("Hello", true, List.of(), List.of()))
-                .willReturn(new PythonChatResponse("Welcome", true));
-
-        mockMvc.perform(post("/chat")
-                        .contentType("application/json")
-                        .content("""
-                                {"message":"Hello","newConversation":true}
-                                """))
-                .andExpect(status().isOk())
-                .andExpect(content().json("""
-                        {"response":"Welcome","is_opening":true}
-                        """));
-
-        org.mockito.Mockito.verify(aiService).chat("Hello", true, List.of(), List.of());
-    }
 }
