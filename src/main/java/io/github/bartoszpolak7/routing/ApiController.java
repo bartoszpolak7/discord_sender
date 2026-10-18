@@ -4,6 +4,8 @@ import io.github.bartoszpolak7.model.DiscordMessage;
 import io.github.bartoszpolak7.model.MessageRequest;
 import io.github.bartoszpolak7.service.BotService;
 import io.github.bartoszpolak7.service.WebhookService;
+import jakarta.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +26,7 @@ public class ApiController {
     }
 
     @PostMapping(path = "/webhook/send", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String sendWebhookMessage(@RequestBody MessageRequest request) {
+    public String sendWebhookMessage(@Valid @RequestBody MessageRequest request) {
         webhookService.sendMessage(request.message());
         return "Message sent to Discord";
     }

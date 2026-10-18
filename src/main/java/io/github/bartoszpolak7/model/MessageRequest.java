@@ -1,4 +1,6 @@
 package io.github.bartoszpolak7.model;
 
-public record MessageRequest(String message) {
+import jakarta.validation.constraints.NotBlank;
+
+public record MessageRequest(@NotBlank String message) {
 }
