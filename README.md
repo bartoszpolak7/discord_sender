@@ -45,7 +45,3 @@ the bundled web client.
 - `GET /webhook/config` — report whether a webhook is configured (the URL is
   kept private).
 - `GET /bot/messages` — return the bot's recent message history.
-
-```
-
-```
