@@ -12,11 +12,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(ApiController.class)
 class ApiControllerTest {
@@ -33,30 +35,51 @@ class ApiControllerTest {
     @Test
     void sendsWebhookMessage() throws Exception {
         mockMvc.perform(post("/webhook/send")
-                        .contentType("application/json")
-                        .content("""
-                                {"message":"Hello Discord"}
-                                """))
+                .contentType("application/json")
+                .content("""
+                        {"message":"Hello Discord"}
+                        """))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message sent to Discord"));
+                .andExpect(content().string(""));
 
         verify(webhookService).sendMessage("Hello Discord");
     }
 
     @Test
-    void reportsWebhookConfigurationWithoutExposingItsUrl() throws Exception {
+    void failsToSendWhenWebhookIsNotConfigured() throws Exception {
+        willThrow(new IllegalStateException("DISCORD_WEBHOOK_URL not configured"))
+                .given(webhookService).sendMessage("Hello");
+
+        mockMvc.perform(post("/webhook/send")
+                .contentType("application/json")
+                .content("""
+                        {"message":"Hello"}
+                        """))
+                .andExpect(status().is5xxServerError());
+    }
+
+    @Test
+    void reportsWebhookIsConfigured() throws Exception {
         given(webhookService.isConfigured()).willReturn(true);
 
         mockMvc.perform(get("/webhook/config"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Discord webhook jest skonfigurowany"));
+                .andExpect(jsonPath("$.configured").value(false));
+    }
+
+    @Test
+    void reportsWhenWebhookIsNotConfigured() throws Exception {
+        given(webhookService.isConfigured()).willReturn(false);
+
+        mockMvc.perform(get("/webhook/config"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.configured").value(false));
     }
 
     @Test
     void returnsBotMessageHistory() throws Exception {
         given(botService.getMessages()).willReturn(List.of(
-                new DiscordMessage("Ada", "Hello", "general")
-        ));
+                new DiscordMessage("Ada", "Hello", "general")));
 
         mockMvc.perform(get("/bot/messages"))
                 .andExpect(status().isOk())

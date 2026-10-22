@@ -13,15 +13,14 @@ public class WebhookService {
 
     public WebhookService(
             RestClient.Builder restClientBuilder,
-            @Value("${discord.webhook-url:}") String webhookUrl
-    ) {
+            @Value("${discord.webhook-url:}") String webhookUrl) {
         this.client = restClientBuilder.build();
         this.webhookUrl = webhookUrl;
     }
 
     public void sendMessage(String content) {
         if (webhookUrl.isBlank()) {
-            throw new IllegalStateException("DISCORD_WEBHOOK_URL is not configured");
+            throw new IllegalStateException("DISCORD_WEBHOOK_URL nie jest skonfigurowany");
         }
         client.post()
                 .uri(webhookUrl)

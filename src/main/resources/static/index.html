@@ -64,7 +64,11 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/webhook/config");
-        document.getElementById("config").textContent = await response.text();
+        const config = await response.json();
+
+        document.getElementById("config").textContent = config.configured
+          ? "DISCORD_WEBHOOK_URL jest skonfigurowany poprawnie"
+          : "DISCORD_WEBHOOK_URL nie jest skonfigurowany";
         await loadMessages();
         setInterval(loadMessages, 5000);
       });
