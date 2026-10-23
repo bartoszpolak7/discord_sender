@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # for better sonar analysis
 
       - name: Set up JDK 21
         uses: actions/setup-java@v6
@@ -37,3 +39,16 @@ jobs:
         with:
           name: test-report
           path: build/reports/tests/
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarQube analysis
+        if: github.actor != 'dependabot[bot]'
+        run: ./gradlew sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
