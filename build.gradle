@@ -22,7 +22,7 @@ dependencies {
     // combine model annotations (@NotBlank) with @Valid in ApiController for full validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'net.dv8tion:JDA:6.4.1'
+    implementation 'net.dv8tion:JDA:6.7.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
