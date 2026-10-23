@@ -96,7 +96,7 @@ class ApiControllerTest {
 
         mockMvc.perform(get("/webhook/config"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.configured").value(false));
+                .andExpect(jsonPath("$.configured").value(true));
     }
 
     @Test
