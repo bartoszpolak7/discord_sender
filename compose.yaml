@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    image: bartoszpolak7/discord-sender
+    image: bartoszpolak7/discord_sender
     ports:
       - "8080:8080"
     env_file: .env
