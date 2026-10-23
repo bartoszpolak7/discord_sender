@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "org.sonarqube" version "7.5.0.8588"
 }
 
 group = 'io.github.bartoszpolak7'
@@ -32,4 +33,11 @@ tasks.named('test') {
 
 tasks.named('bootJar') {
     archiveFileName = 'app.jar'
+}
+
+sonar {
+  properties {
+    property "sonar.projectKey", "bartoszpolak7_discord_sender"
+    property "sonar.organization", "bartoszpolak7"
+  }
 }
