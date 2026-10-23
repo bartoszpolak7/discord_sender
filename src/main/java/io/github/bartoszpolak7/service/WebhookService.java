@@ -20,7 +20,7 @@ public class WebhookService {
 
     public void sendMessage(String content) {
         if (webhookUrl.isBlank()) {
-            throw new IllegalStateException("DISCORD_WEBHOOK_URL nie jest skonfigurowany");
+            throw new WebhookNotConfiguredException("discord.webhook-url is not configured");
         }
         client.post()
                 .uri(webhookUrl)
