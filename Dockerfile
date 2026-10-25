@@ -1,4 +1,4 @@
-FROM gradle:9.8.1-jdk21-alpine AS build
+FROM gradle:9.8.2-jdk21-alpine AS build
 WORKDIR /app
 # first copy gradle files to optimize caching
 # prevents dependencies download when code changes
