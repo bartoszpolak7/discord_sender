@@ -1,0 +1,15 @@
+userName: ${BROWSERSTACK_USERNAME}
+accessKey: ${BROWSERSTACK_ACCESS_KEY}
+
+framework: junit5
+
+platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: Chrome
+    browserVersion: latest
+browserstackLocal: false
+buildName: discord-sender
+buildIdentifier: ${BUILD_NUMBER}
+projectName: discord_sender
+testObservability: true

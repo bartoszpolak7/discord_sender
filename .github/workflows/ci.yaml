@@ -97,3 +97,58 @@ jobs:
           resourceGroup: rg-discord-sender
           imageToDeploy: ghcr.io/${{ github.repository }}:${{ github.sha }}
           registryUrl: ghcr.io
+
+  api-tests:
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      APP_URL: ${{ secrets.APP_URL }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wait for the app
+        run: |
+          for i in $(seq 1 30); do
+            curl -fsS "$APP_URL/webhook/config" > /dev/null && exit 0
+            sleep 10
+          done
+          echo "App did not become ready" && exit 1
+
+      - name: Run API tests
+        run: npx newman run postman/discord_sender.postman_collection.json --env-var baseUrl="$APP_URL" --reporters cli,junit --reporter-junit-export newman-results.xml
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: newman-results
+          path: newman-results.xml
+
+  browserstack-tests:
+    needs: [deploy, api-tests]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: BrowserStack env setup
+        uses: browserstack/github-actions/setup-env@master
+        with:
+          username: ${{ secrets.BROWSERSTACK_USERNAME }}
+          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          build-name: ${{ github.repository }}-${{ github.run_number }}
+
+      - name: Run browser regression tests
+        run: ./gradlew e2eTest
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
