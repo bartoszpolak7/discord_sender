@@ -1,0 +1,14 @@
+$kind: http-request
+name: http://localhost:8080/webhook/send
+description: |-
+  Generated from cURL: curl --location 'http://localhost:8080/webhook/send' \
+  --header 'Content-Type: application/json' \
+  --data '{"message": '
+url: "{{baseUrl}}/webhook/send"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r\n    \"message\": \"abcd\" \r\n}"
+order: 4000

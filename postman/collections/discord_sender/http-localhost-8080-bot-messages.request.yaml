@@ -1,0 +1,6 @@
+$kind: http-request
+name: http://localhost:8080/bot/messages
+description: "Generated from cURL: curl --location 'http://localhost:8080/bot/messages'"
+url: "{{baseUrl}}/bot/messages"
+method: GET
+order: 2000

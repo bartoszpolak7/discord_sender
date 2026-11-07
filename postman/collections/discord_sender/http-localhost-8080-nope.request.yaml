@@ -1,0 +1,6 @@
+$kind: http-request
+name: http://localhost:8080/nope
+description: "Generated from cURL: curl --location 'http://localhost:8080/nope'"
+url: "{{baseUrl}}/nope"
+method: GET
+order: 6000

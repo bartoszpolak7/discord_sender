@@ -1,0 +1,4 @@
+name: discord_sender
+values:
+  - key: baseUrl
+    value: 'http://localhost:8080'

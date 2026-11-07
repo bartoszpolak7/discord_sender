@@ -1,0 +1,6 @@
+$kind: http-request
+name: http://localhost:8080/webhook/send
+description: "Generated from cURL: curl --location --request GET 'http://localhost:8080/webhook/send'"
+url: "{{baseUrl}}/webhook/send"
+method: GET
+order: 5000
