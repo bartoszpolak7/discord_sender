@@ -27,7 +27,7 @@ dependencies {
 
     testImplementation "org.seleniumhq.selenium:selenium-java:4.52.0"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'com.browserstack:browserstack-java-sdk:1.80.0'
+    testImplementation 'com.browserstack:browserstack-java-sdk:1.80.3'
 }
 
 tasks.named('test') {
