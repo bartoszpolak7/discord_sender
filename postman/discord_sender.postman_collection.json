@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "966c71a1-7861-4d90-9dee-b20fd425711c",
+    "name": "discord_sender",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60029420",
+    "_collection_link": "https://go.postman.co/collection/60029420-966c71a1-7861-4d90-9dee-b20fd425711c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8080/webhook/config",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/webhook/config",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhook",
+            "config"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/webhook/config'"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/bot/messages",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/bot/messages",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "bot",
+            "messages"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/bot/messages'"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/webhook/send",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"message\": \"\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/webhook/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhook",
+            "send"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/webhook/send' \\\n--header 'Content-Type: application/json' \\\n--data '{\"message\": \"\"}'"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/webhook/send",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"message\": \"abcd\" \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/webhook/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhook",
+            "send"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/webhook/send' \\\n--header 'Content-Type: application/json' \\\n--data '{\"message\": '"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/webhook/send",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/webhook/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhook",
+            "send"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request GET 'http://localhost:8080/webhook/send'"
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/nope",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/nope",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "nope"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/nope'"
+      },
+      "response": []
+    }
+  ]
+}
